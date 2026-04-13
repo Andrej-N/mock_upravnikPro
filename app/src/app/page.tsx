@@ -51,10 +51,10 @@ export default function Dashboard() {
       />
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="Aktivne zgrade" value={activeBuildings.length} hint={`${buildings.length - activeBuildings.length} arhivirano`} tone="primary" />
+        <StatCard label="Aktivne zgrade" value={activeBuildings.length} hint={`${buildings.length - activeBuildings.length} arhivirano`} tone="primary" href="/buildings" />
         <StatCard label="Otvoreni događaji" value={openEvents.length} hint="čekaju akciju" tone="info" />
-        <StatCard label="Hitno (≤ 7 dana)" value={critical} hint="servisi i obnove" tone="danger" />
-        <StatCard label="Uskoro (≤ 30 dana)" value={warning} hint="planirati izvršenje" tone="warning" />
+        <StatCard label="Hitno (≤ 7 dana)" value={critical} hint="servisi i obnove" tone="danger" href="/obligations?filter=red" />
+        <StatCard label="Uskoro (≤ 30 dana)" value={warning} hint="planirati izvršenje" tone="warning" href="/obligations?filter=yellow" />
       </div>
 
       <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">

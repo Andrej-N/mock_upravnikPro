@@ -1,4 +1,5 @@
 import * as React from "react";
+import Link from "next/link";
 
 type DivProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -93,11 +94,13 @@ export function StatCard({
   value,
   hint,
   tone = "neutral",
+  href,
 }: {
   label: string;
   value: React.ReactNode;
   hint?: React.ReactNode;
   tone?: BadgeTone;
+  href?: string;
 }) {
   const accent: Record<BadgeTone, string> = {
     neutral: "bg-gray-50 text-gray-700",
@@ -107,18 +110,24 @@ export function StatCard({
     danger: "bg-red-50 text-red-700",
     info: "bg-indigo-50 text-indigo-700",
   };
-  return (
-    <Card className="p-5">
-      <div className="flex items-start justify-between">
-        <div>
-          <div className="text-xs font-medium uppercase tracking-wide text-[var(--muted)]">{label}</div>
-          <div className="mt-1.5 text-3xl font-semibold tracking-tight">{value}</div>
-          {hint ? <div className="mt-1 text-xs text-[var(--muted)]">{hint}</div> : null}
-        </div>
-        <span className={cn("inline-flex h-8 w-8 items-center justify-center rounded-md", accent[tone])}>●</span>
+  const inner = (
+    <div className="flex items-start justify-between">
+      <div>
+        <div className="text-xs font-medium uppercase tracking-wide text-[var(--muted)]">{label}</div>
+        <div className="mt-1.5 text-3xl font-semibold tracking-tight">{value}</div>
+        {hint ? <div className="mt-1 text-xs text-[var(--muted)]">{hint}</div> : null}
       </div>
-    </Card>
+      <span className={cn("inline-flex h-8 w-8 items-center justify-center rounded-md", accent[tone])}>●</span>
+    </div>
   );
+  if (href) {
+    return (
+      <Link href={href} className="block transition-shadow hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-200 rounded-xl">
+        <Card className="p-5">{inner}</Card>
+      </Link>
+    );
+  }
+  return <Card className="p-5">{inner}</Card>;
 }
 
 export function Table({ children }: { children: React.ReactNode }) {

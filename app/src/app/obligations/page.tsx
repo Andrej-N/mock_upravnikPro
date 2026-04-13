@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PageHeader } from "@/components/sidebar";
 import { Badge, Button, Card, Table, TD, TH } from "@/components/ui";
 import { buildings, obligations, daysUntil, urgencyLevel, formatDate } from "@/lib/mock-data";
@@ -9,6 +9,11 @@ type Filter = "all" | "red" | "yellow" | "green";
 
 export default function ObligationsPage() {
   const [f, setF] = useState<Filter>("all");
+
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get("filter");
+    if (q === "red" || q === "yellow" || q === "green" || q === "all") setF(q);
+  }, []);
 
   const rows = obligations
     .filter((o) => o.isActive)
